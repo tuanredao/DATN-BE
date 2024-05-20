@@ -1,0 +1,15 @@
+{
+    "attributes": [
+      {
+        "trait_type": "Loại xe",
+        "value": "Xe con"
+      },
+      {
+        "trait_type": "Tỉnh/Thành phố",
+        "value": "Hà Nội"
+      }
+    ],
+    "description": "30J98765",
+    "image": "https://ik.imagekit.io/datn/bienSo30K88888?updatedAt=1711363673308",
+    "name": "Biển số xe"
+  }
