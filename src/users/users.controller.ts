@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Query, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Put, Patch } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './users.model';
 
@@ -29,6 +29,22 @@ export class UsersController {
       return { message: 'User data edited successfully', user: editedUser };
     } else {
       return { message: 'Failed to edit user data' };
+    }
+  }
+
+  @Get('all')
+  async findAllUsers() {
+    const users = await this.usersService.findAllUsers();
+    return { message: 'All users retrieved successfully', users };
+  }
+
+  @Patch('updateKYC')
+  async updateKYCStatus(@Query('wallet') wallet: string) {
+    const updatedUser = await this.usersService.updateKYCStatus(wallet);
+    if (updatedUser) {
+      return { message: 'KYC status updated successfully', user: updatedUser };
+    } else {
+      return { message: 'Failed to update KYC status' };
     }
   }
 }

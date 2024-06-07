@@ -235,6 +235,17 @@
   },
   {
     "inputs": [
+      { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+      { "internalType": "address", "name": "from", "type": "address" },
+      { "internalType": "address", "name": "recipient", "type": "address" }
+    ],
+    "name": "NFTForced",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "address", "name": "to", "type": "address" },
       { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
     ],
@@ -276,6 +287,7 @@
     ],
     "name": "getTokenInfo",
     "outputs": [
+      { "internalType": "uint256", "name": "id", "type": "uint256" },
       { "internalType": "string", "name": "bienSo", "type": "string" },
       { "internalType": "string", "name": "tinhThanhPho", "type": "string" },
       { "internalType": "string", "name": "loaiXe", "type": "string" },

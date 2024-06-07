@@ -23,6 +23,8 @@ export class BienSoService {
         await newBienSo.save();
       }
     }
+    console.log("save ok");
+    
   }
 
   async getNFTs(): Promise<BienSo[]> {
@@ -34,4 +36,12 @@ export class BienSoService {
     }
   }
 
+  async getNFTsCount(): Promise<number> {
+    try {
+      const allNFTs = await this.bienSoModel.find().exec();
+      return allNFTs.length;
+    } catch (error) {
+      throw new Error(`Không thể lấy số lượng biển số chưa được sử dụng từ cơ sở dữ liệu: ${error}`);
+    }
+  }
 }

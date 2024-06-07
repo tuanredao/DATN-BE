@@ -15,6 +15,10 @@ import { AuctionService } from './auction/auction.service';
 import { getEventAuctionService } from './getEventAuction/getEventAuction.service';
 import { AuctionController } from './auction/auction.controller';
 import { getListingService } from './getListing/getListing.service';
+import { OfferModule } from './offer/offer.module';
+import { OfferService } from './offer/offer.service';
+import { OfferController } from './offer/offer.controller';
+import { OfferSchema } from './offer/offer.model';
 
 @Module({
   imports: [
@@ -28,8 +32,9 @@ import { getListingService } from './getListing/getListing.service';
     getListingModule,
     MongooseModule.forFeature([{ name: 'BienSo', schema: BienSoSchema }]),
     MongooseModule.forFeature([{ name: 'Auction', schema: AuctionSchema }]),
+    MongooseModule.forFeature([{ name: 'Offer', schema: OfferSchema }]),
   ],
-  providers: [BienSoService, AuctionService, getNFTService, getEventAuctionService, getListingService],
-  controllers: [BienSoController, AuctionController],
+  providers: [BienSoService, AuctionService, getNFTService, getEventAuctionService, getListingService, OfferService],
+  controllers: [BienSoController, AuctionController, OfferController],
 })
 export class AppModule {}

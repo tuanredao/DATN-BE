@@ -2,7 +2,7 @@ const apiUrl = 'https://api-amoy.polygonscan.com/api';
 const apiKey = 'YourApiKeyToken';
 
 async function fetchLogs() {
-  const url = `${apiUrl}?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=0x1F31C80B765E00fCdDf2F58153Cd75E423fbE680&topic0=0x35fa1df47dae385ce2a501434f277f7ffffea1da9b2e68182a201378c815af6e&apikey=${apiKey}`;
+  const url = `${apiUrl}?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=0x47EFC7e582cA15E802E23BC077eBdf252953Ac4f&topic0=0x35fa1df47dae385ce2a501434f277f7ffffea1da9b2e68182a201378c815af6e&apikey=${apiKey}`;
 
   try {
     const response = await fetch(url);

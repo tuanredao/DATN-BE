@@ -30,4 +30,27 @@ export class UsersService {
       return null;
     }
   }
+
+  async findAllUsers(): Promise<User[]> {
+    try {
+      return await this.userModel.find().exec();
+    } catch (error) {
+      console.error("Error finding all users", error);
+      return [];
+    }
+  }
+
+  async updateKYCStatus(wallet: string): Promise<User | null> {
+    try {
+      return await this.userModel.findOneAndUpdate(
+        { wallet, KYC: false },
+        { KYC: true },
+        { new: true }
+      ).exec();
+    } catch (error) {
+      console.error("Error updating KYC status", error);
+      return null;
+    }
+  }
+  
 }

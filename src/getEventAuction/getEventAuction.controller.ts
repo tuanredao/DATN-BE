@@ -17,4 +17,15 @@ export class getEventAuctionController {
       throw error;
     }
   }
+
+  @Get('makeoffer')
+  async getMakeOffer(): Promise<any[]> {
+    try {
+      const offers = await this.getEventAuctionService.getMakeOffer();
+      console.log('Listings:', offers);
+      return offers;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

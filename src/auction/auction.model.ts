@@ -16,7 +16,6 @@ export const AuctionSchema = new mongoose.Schema({
   type: String,
   nftStatus: Number,
   owner: String,
-  image: String,
 });
 
 export interface Auction extends mongoose.Document {
@@ -35,5 +34,4 @@ export interface Auction extends mongoose.Document {
   type: String;
   nftStatus: Number;
   owner: String;
-  image: String;
 }

@@ -10,7 +10,7 @@ export class mintNFTService {
   private readonly provider: ethers.providers.JsonRpcProvider;
   private readonly nftAbi: string;
   private readonly contractAddress =
-    '0x47f515ED707abfB69Eab27224A9CB996528dA761';
+    '0xbf35ff6953b0ec6F29DcB9982Ce71f7C7D0fF356';
   private isMoralisInitialized: boolean = false;
 
   private async initializeMoralis() {

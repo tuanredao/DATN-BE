@@ -6,7 +6,6 @@ export const BienSoSchema = new Schema({
   tinhThanhPho: { type: String, required: true },
   loaiXe: { type: String, required: true },
   trangThai: { type: String, required: true },
-  image: { type: String, required: true },
 });
 
 export interface BienSo extends Document {
@@ -15,5 +14,4 @@ export interface BienSo extends Document {
   tinhThanhPho: string;
   loaiXe: string;
   trangThai: string;
-  image: string;
 }

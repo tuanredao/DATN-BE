@@ -5,10 +5,12 @@ import { BienSo } from './bienSo.model';
 @Controller('BienSo')
 export class BienSoController {
   constructor(private readonly BienSoService: BienSoService) {}
-  @Get('save-all')
-  async saveAllNFTs(): Promise<string> {
-    await this.BienSoService.saveNFTs();
-    return 'All NFTs have been saved to the database';
+  @Post('save-all')
+  async saveAllNFTs(): Promise<void> {
+    const res =await this.BienSoService.saveNFTs();
+    console.log("Res", res);
+    
+    return res
   }
 
   @Get('all')

@@ -12,6 +12,7 @@ export const UserSchema = new mongoose.Schema({
   frontImage: String, // Ảnh mặt trước
   backImage: String, // Ảnh mặt sau
   wallet: { type: String, unique: true, immutable: true }, // Ví liên kết
+  KYC: Boolean,
 });
 
 export interface User extends mongoose.Document {
@@ -26,4 +27,5 @@ export interface User extends mongoose.Document {
   frontImage: String;
   backImage: String;
   wallet: String;
+  KYC: Boolean;
 }

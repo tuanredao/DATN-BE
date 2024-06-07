@@ -11,7 +11,7 @@ export class getNFTService {
   private readonly provider: ethers.providers.JsonRpcProvider;
   private readonly nftAbi: string;
   private readonly contractAddress =
-    '0x47f515ED707abfB69Eab27224A9CB996528dA761';
+    '0xbf35ff6953b0ec6F29DcB9982Ce71f7C7D0fF356';
 
   private async initializeMoralis() {
     await initializeMoralis(); // Sử dụng hàm từ file mới
@@ -46,7 +46,8 @@ export class getNFTService {
       });
       const jsonResponse = response['jsonResponse'];
       const supply = jsonResponse.total_tokens;
-      
+
+      console.log(supply);
 
       return supply;
     } catch (e) {
@@ -60,26 +61,13 @@ export class getNFTService {
       this.contractAddress,
       this.nftAbi,
     );
-  
+
     try {
       const tokenInfo = await contract.getTokenInfo(tokenId);
-      const owner = await contract.ownerOf(tokenId)
-      const uri = await contract.tokenURI(tokenId);
-      const response = await fetch(uri);
-  
-      if (!response.ok) {
-        throw new Error('Failed to fetch token info');
-      }
-  
-      const json = await response.json();
-      const image = json.image;
-      console.log(image);
-      
-  
-      const nftInfo = { tokenInfo, owner, image };
-      console.log(nftInfo);
-      
-  
+      const owner = await contract.ownerOf(tokenId);
+
+      const nftInfo = { tokenInfo, owner };
+
       return nftInfo;
     } catch (error) {
       console.error('Error fetching token info:', error);
@@ -87,53 +75,44 @@ export class getNFTService {
     }
   }
 
-async getAll(): Promise<any[]> {
-  await this.initializeMoralis();
-  try {
-    const supply = await this.getSupply();
-    const contract = await this.getContractInstance(
-      this.contractAddress,
-      this.nftAbi,
-    );
+  async getAll(): Promise<any[]> {
+    await this.initializeMoralis();
+    try {
+      const supply = await this.getSupply();
+      const contract = await this.getContractInstance(
+        this.contractAddress,
+        this.nftAbi,
+      );
 
-    const tokenPromises = [];
+      const tokenPromises = [];
 
-    for (let i = 0; i < supply; i++) {
-      const tokenId = i.toString();
-      const tokenPromise = contract.getTokenInfo(tokenId);
-      tokenPromises.push(tokenPromise);
-    }
-
-    const tokenInfos = await Promise.all(tokenPromises);
-
-    const formattedTokenInfos = await Promise.all(tokenInfos.map(async (tokenInfo, index) => {
-      const tokenId = index.toString();
-      const uri = await contract.tokenURI(tokenId);
-      const response = await fetch(uri);
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch token info for tokenId ${tokenId}`);
+      for (let i = 0; i < supply; i++) {
+        const tokenId = i.toString();
+        const tokenPromise = contract.getTokenInfo(tokenId);
+        tokenPromises.push(tokenPromise);
       }
 
-      const json = await response.json();
-      const image = json.image;
+      const tokenInfos = await Promise.all(tokenPromises);
 
-      return {
-        tokenId: tokenId,
-        bienSo: tokenInfo[0],
-        tinhThanhPho: tokenInfo[1],
-        loaiXe: tokenInfo[2],
-        trangThai: tokenInfo[3],
-        image: image,
-      };
-    }));
+      const formattedTokenInfos = await Promise.all(
+        tokenInfos.map(async (tokenInfo, index) => {
+          const tokenId = index.toString();
+          console.log(tokenInfo);
 
-    return formattedTokenInfos;
-  } catch (error) {
-    console.error('Error fetching token infos:', error);
-    return [];
+          return {
+            tokenId: tokenId,
+            bienSo: tokenInfo[1],
+            loaiXe: tokenInfo[3],
+            tinhThanhPho: tokenInfo[2],
+            trangThai: tokenInfo[4],
+          };
+        }),
+      );
+
+      return formattedTokenInfos;
+    } catch (error) {
+      console.error('Error fetching token infos:', error);
+      return [];
+    }
   }
-}
-
-  
 }

@@ -25,4 +25,10 @@ export class AuctionController {
     }
     return auction;
   }
+
+  @Get('stats')
+  async getAuctionStats(): Promise<{ totalNFT: number; totalSold: number; soldNFT:number; pendingNFT: number; notSoldNFT: number }> {
+    const stats = await this.auctionService.calculateAuctionStats();
+    return stats
+  }
 }

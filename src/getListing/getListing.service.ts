@@ -12,7 +12,7 @@ export class getListingService {
   private readonly provider: ethers.providers.JsonRpcProvider;
   private readonly auctionAbi: string;
   private readonly contractAddress =
-    '0x1F31C80B765E00fCdDf2F58153Cd75E423fbE680';
+    '0x47EFC7e582cA15E802E23BC077eBdf252953Ac4f';
 
   private async initializeMoralis() {
     await initializeMoralis(); // Sử dụng hàm từ file mới
@@ -63,6 +63,46 @@ export class getListingService {
       
 
       return {listingInfo, nftInfo};
+    } catch (error) {
+      console.error('Error fetching token info:', error);
+      throw error;
+    }
+  }
+
+  async getListingData(listingId: string): Promise<any> {
+    const contract = await this.getContractInstance(
+      this.contractAddress,
+      this.auctionAbi,
+    );
+
+    try {
+      const listing = await contract.listings(listingId);
+
+
+      const listingData = {
+        highestOfferId: parseInt(listing[4]),
+        highestPrice: parseInt(listing[5])/1e18,
+      };
+      
+
+      return listingData;
+    } catch (error) {
+      console.error('Error fetching token info:', error);
+      throw error;
+    }
+  }
+
+  
+  async getDeadline(): Promise<any> {
+    const contract = await this.getContractInstance(
+      this.contractAddress,
+      this.auctionAbi,
+    );
+
+    try {
+      const deadline = await contract.deadline();
+
+      return deadline.toNumber();
     } catch (error) {
       console.error('Error fetching token info:', error);
       throw error;
