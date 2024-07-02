@@ -151,5 +151,23 @@ export class OfferService {
       throw new Error(`Không thể lấy ưu đãi với bidder ${bidder}: ${error.message}`);
     }
   }
+
+  async getHighestBidderById(id: number): Promise<any> {
+    try {
+      const offers = await this.OfferModel.find({ id }).exec();
+
+      if (!offers || offers.length === 0) {
+        throw new Error(`Không có ưu đãi nào với id ${id}`);
+      }
+
+      let highestOffer = offers.reduce((prev, current) => {
+        return prev.offerId > current.offerId ? prev : current;
+      });
+
+      return highestOffer.bidder;
+    } catch (error) {
+      throw new Error(`Không thể lấy bidder với id ${id}: ${error.message}`);
+    }
+  }
   
 }

@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Get, Query, Put, Param, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Query,
+  Put,
+  Param,
+  NotFoundException,
+} from '@nestjs/common';
 import { AuctionService } from './auction.service';
 import { Auction } from './auction.model';
 
@@ -27,8 +36,33 @@ export class AuctionController {
   }
 
   @Get('stats')
-  async getAuctionStats(): Promise<{ totalNFT: number; totalSold: number; soldNFT:number; pendingNFT: number; notSoldNFT: number }> {
+  async getAuctionStats(): Promise<{
+    totalNFT: number;
+    totalSold: number;
+    soldNFT: number;
+    pendingNFT: number;
+    notSoldNFT: number;
+  }> {
     const stats = await this.auctionService.calculateAuctionStats();
-    return stats
+    return stats;
+  }
+
+  @Get('status')
+  async getPaidAuctions(): Promise<{ paid: Auction[], unsuccess: Auction[] }>{
+    const [paidAuctions, unsuccessAuctions] = await Promise.all([
+      this.auctionService.getPaidAuctions(),
+      this.auctionService.getUnsuccessdAuctions(),
+    ]);
+
+    return {
+      paid: paidAuctions,
+      unsuccess: unsuccessAuctions,
+    };
+  }
+
+  @Get('unsuccess')
+  async getUnsuccessdAuctions(): Promise<Auction[]> {
+    const paidAuctions = await this.auctionService.getUnsuccessdAuctions();
+    return paidAuctions;
   }
 }

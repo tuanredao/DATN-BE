@@ -52,5 +52,14 @@ export class UsersService {
       return null;
     }
   }
-  
+
+  async checkKYCStatus(wallet: string): Promise<Boolean> {
+    try {
+      const user = await this.userModel.findOne({ wallet }).exec();
+      return user ? user.KYC : false;
+    } catch (error) {
+      console.error("Error checking KYC status", error);
+      return false;
+    }
+  }
 }

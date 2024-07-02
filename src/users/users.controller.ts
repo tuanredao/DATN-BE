@@ -47,4 +47,10 @@ export class UsersController {
       return { message: 'Failed to update KYC status' };
     }
   }
+
+  @Get('checkKyc')
+  async checkKYCStatus(@Query('wallet') wallet: string) {
+    const kycStatus = await this.usersService.checkKYCStatus(wallet);
+    return kycStatus;
+  }
 }

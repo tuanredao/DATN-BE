@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import fetch from 'node-fetch';
+import axios from 'axios';
 import { getListingService } from 'src/getListing/getListing.service'; // Sửa lại import
 
 const Web3 = require('web3')
 const apiUrl: string = 'https://api-amoy.polygonscan.com/api';
-const apiKey: string = 'YourApiKeyToken';
+const apiKey: string = 'SJNPUVTMNH99Z7A3F1DD1FHU2C378YN7M6';
 const topicCreate: string = '0x35fa1df47dae385ce2a501434f277f7ffffea1da9b2e68182a201378c815af6e';
 const topicMakeOffer: string = '0xd7df0c72641d362ea57ecc9cab99c77f936e36bb826f096258c3404196b26d6a';
 const address: string = '0x47EFC7e582cA15E802E23BC077eBdf252953Ac4f';
@@ -29,24 +30,20 @@ export class getEventAuctionService {
     async getListings(): Promise<number[]> {
         const url: string = `${apiUrl}?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=${address}&topic0=${topicCreate}&apikey=${apiKey}`;
         console.log(url);
-        
+    
         try {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            if (data.status === '1') {
-                const ids = data.result.map((log: any) => this.hexToInt(log.topics[1]));
+            const response = await axios.get(url, {
+                timeout: 60000 // Tăng thời gian chờ lên 60 giây
+            });
+    
+            if (response.data.status === '1') {
+                const ids = response.data.result.map((log: any) => this.hexToInt(log.topics[1]));
                 return ids;
             } else {
-                throw new Error('Error fetching logs: ' + data.message);
+                throw new Error('Error fetching logs: ' + response.data.message);
             }
         } catch (error) {
-            throw new Error('Fetch error: ' + error);
+            throw new Error('Fetch error: ' + error.message);
         }
     }
 

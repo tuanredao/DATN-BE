@@ -62,4 +62,18 @@ export class OfferController {
     }
     return offer;
   }
+
+  @Get('highest')
+  async getHighestBidder(
+    @Query('id') id?: number,
+  ): Promise<string> {
+    if (id === undefined) {
+      throw new NotFoundException(`ID không được cung cấp`);
+    }
+    const highestBidder = await this.offerService.getHighestBidderById(id);
+    if (!highestBidder) {
+      throw new NotFoundException(`Không tìm thấy bidder cho id ${id}`);
+    }
+    return highestBidder;
+  }
 }

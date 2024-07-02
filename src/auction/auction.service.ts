@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Auction } from './auction.model';
 import { getEventAuctionService } from 'src/getEventAuction/getEventAuction.service';
 import { BienSoService } from 'src/bienSo/bienSo.service';
+import { OfferService } from 'src/offer/offer.service';
 
 interface AuctionData {
   id: number;
@@ -33,6 +34,8 @@ export class AuctionService {
     @InjectModel('Auction') private readonly auctionModel: Model<Auction>,
     private readonly auctionService: getEventAuctionService,
     private readonly BienSoService: BienSoService,
+    private readonly OfferService: OfferService,
+
   ) {}
 
   async saveListing() {
@@ -123,4 +126,29 @@ export class AuctionService {
       throw new Error(`Không thể tính toán thống kê phiên đấu giá: ${error.message}`);
     }
   }  
+
+  async getPaidAuctions(): Promise<any>  {
+    try {
+      const getPaidAuctions = await this.auctionModel.find({ listingStatus: 3 }).select('bienSo -_id')
+      .exec();;
+      const paidAuctions = getPaidAuctions.map(auction => auction.bienSo);
+      return paidAuctions;
+    } catch (error) {
+      throw new Error(`Không thể tìm các phiên đấu giá hoàn thành: ${error.message}`);
+    }
+  }
+
+  async getUnsuccessdAuctions(): Promise<any> {
+    try {
+      const nonCompletedAuctions = await this.auctionModel
+        .find({ listingStatus: { $ne: 3 } })
+        .select('bienSo -_id')
+        .exec();
+      
+      const unsuccessAuctions = nonCompletedAuctions.map(auction => auction.bienSo);
+      return unsuccessAuctions;
+    } catch (error) {
+      throw new Error(`Không thể lấy bienSo của các phiên đấu giá chưa hoàn thành: ${error.message}`);
+    }
+  }
 }

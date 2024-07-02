@@ -6,11 +6,12 @@ import { AuctionController } from './auction.controller';
 import { AuctionService } from './auction.service';
 import { AuctionSchema } from './auction.model'; 
 import { BienSoService } from 'src/bienSo/bienSo.service';
+import { OfferService } from 'src/offer/offer.service';
 
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'Auction', schema: AuctionSchema }])],
   controllers: [AuctionController],
-  providers: [AuctionService, BienSoService],
+  providers: [AuctionService, BienSoService, OfferService],
 })
 export class AuctionModule {}
