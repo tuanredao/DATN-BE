@@ -8,7 +8,7 @@ const apiUrl: string = 'https://api-amoy.polygonscan.com/api';
 const apiKey: string = 'SJNPUVTMNH99Z7A3F1DD1FHU2C378YN7M6';
 const topicCreate: string = '0x35fa1df47dae385ce2a501434f277f7ffffea1da9b2e68182a201378c815af6e';
 const topicMakeOffer: string = '0xd7df0c72641d362ea57ecc9cab99c77f936e36bb826f096258c3404196b26d6a';
-const address: string = '0x47EFC7e582cA15E802E23BC077eBdf252953Ac4f';
+const address: string = '0xd4f90022234114eE921AA5E3e86f2b27682AA188';
 
 @Injectable()
 export class getEventAuctionService {

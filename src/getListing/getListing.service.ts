@@ -12,7 +12,7 @@ export class getListingService {
   private readonly provider: ethers.providers.JsonRpcProvider;
   private readonly auctionAbi: string;
   private readonly contractAddress =
-    '0x47EFC7e582cA15E802E23BC077eBdf252953Ac4f';
+    '0xd4f90022234114eE921AA5E3e86f2b27682AA188';
 
   private async initializeMoralis() {
     await initializeMoralis(); // Sử dụng hàm từ file mới

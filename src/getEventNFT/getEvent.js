@@ -5,7 +5,7 @@ const { Web3 } = require('web3');
 const web3 = new Web3("wss://polygon-bor-amoy-rpc.publicnode.com");
 
 // Địa chỉ của contract
-const contractAddress = '0x47EFC7e582cA15E802E23BC077eBdf252953Ac4f';
+const contractAddress = '0xd4f90022234114eE921AA5E3e86f2b27682AA188';
 const path = require('path');
 const abiPath = path.join(__dirname, 'nftAbi.json');
 // Đọc ABI từ file
